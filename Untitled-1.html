@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8.1 - Calcular Idade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calcular Idade</h1>
+        <p>Digite os dados solicitados</p>
+        
+        <div class="form-group">
+            <label>Data de Nascimento</label>
+            <input type="number" id="dia" placeholder="dd" min="1" max="31">
+            <input type="number" id="mes" placeholder="mm" min="1" max="12" style="margin-top: 5px;">
+            <input type="number" id="ano" placeholder="aaaa" min="1900" max="2026" style="margin-top: 5px;">
+        </div>
+        
+        <button onclick="calcularIdade()">Calcular</button>
+        
+        <div class="resultado" id="resultado">
+            Resultado
+        </div>
+        
+        <div class="footer">
+            Desenvolvido em Algoritmos e Linguagem de Programação
+        </div>
+    </div>
+
+    <script>
+        function calcularIdade() {
+            let dia = parseInt(document.getElementById('dia').value);
+            let mes = parseInt(document.getElementById('mes').value);
+            let ano = parseInt(document.getElementById('ano').value);
+            let resultado = document.getElementById('resultado');
+            
+            if (!dia || !mes || !ano) {
+                resultado.innerHTML = 'Por favor, preencha todos os campos!';
+                resultado.style.backgroundColor = '#ffebee';
+                resultado.style.color = '#c62828';
+                return;
+            }
+            
+            let dataNascimento = new Date(ano, mes - 1, dia);
+            let dataAtual = new Date();
+            
+            if (dataNascimento > dataAtual) {
+                resultado.innerHTML = 'Data de nascimento não pode ser no futuro!';
+                resultado.style.backgroundColor = '#ffebee';
+                resultado.style.color = '#c62828';
+                return;
+            }
+            
+            let idade = dataAtual.getFullYear() - dataNascimento.getFullYear();
+            let mesAtual = dataAtual.getMonth();
+            let diaAtual = dataAtual.getDate();
+            
+            if (mesAtual < mes - 1 || (mesAtual === mes - 1 && diaAtual < dia)) {
+                idade--;
+            }
+            
+            resultado.innerHTML = `Você tem ${idade} anos completos.`;
+            resultado.style.backgroundColor = '#e8f5e9';
+            resultado.style.color = '#2e7d32';
+        }
+    </script>
+</body>
+</html>
